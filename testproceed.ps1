@@ -26,7 +26,8 @@ $sess = .\New-VMSession.ps1 -VMName $vmName -AdministratorPassword $pass# appel 
 
 #activer la gestion à distance vers la VM
 .\Enable-RemoteManagementViaSession.ps1 -Session $sess
-
+# Exécuter le script Enable-WindowsOptionalFeature.ps1 
+.\Enable-WindowsOptionalFeature.ps1
 # exécute des commandes à l'intérieur de la VM en utilisant la session de gestion à distance
 Invoke-Command -Session $sess {
     # Arrête l'animation une fois la création terminée
@@ -41,9 +42,10 @@ Invoke-Command -Session $sess {
 
     # Install 7-zip
     choco install 7zip -y
-    choco install mariadb.install
+    choco install mariadb.install -y
     choco install mariadb
-    choco install iis.administration -y
+    
 }
+ #Install-WindowsFeature -name Web-Server -IncludeManagementTools #install IIS
 #ferme la session de gestion à distance avec la VM.
 Remove-PSSession -Session $sess
